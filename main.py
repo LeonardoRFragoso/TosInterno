@@ -68,7 +68,7 @@ def upload_files():
 def main():
     # Executa os scripts na ordem desejada
     subprocess.run([sys.executable, "rbt.py"], check=True)
-    subprocess.run([sys.executable, "multirio.py"], check=True)
+    #subprocess.run([sys.executable, "multirio.py"], check=True)
     #subprocess.run([sys.executable, "tecon.py"], check=True)
     
     # Envia as planilhas da pasta "downloads" para a pasta específica do Google Drive

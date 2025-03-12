@@ -1,5 +1,6 @@
 import os
 import time
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -188,6 +189,17 @@ try:
         print("Download concluído:", downloaded_file)
     else:
         print(f"Timeout: arquivo data.xlsx não foi baixado em {timeout} segundos.")
+    
+    # 18) AJUSTAR O CABEÇALHO DA PLANILHA REMOVENDO AS DUAS PRIMEIRAS LINHAS
+    # Para preservar o formato original da coluna DATA, usamos um conversor que formata a data como dd/mm/aaaa.
+    try:
+        df = pd.read_excel(downloaded_file, skiprows=2,
+                           converters={'DATA': lambda x: x.strftime('%d/%m/%Y') if not pd.isnull(x) else x})
+        # Sobrescreve o mesmo arquivo, removendo as duas primeiras linhas e ajustando o formato da coluna DATA.
+        df.to_excel(downloaded_file, index=False)
+        print("Planilha ajustada e sobrescrita com sucesso em:", downloaded_file)
+    except Exception as e:
+        print("Erro ao ajustar a planilha:", e)
     
 finally:
     driver.quit()
